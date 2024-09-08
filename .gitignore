@@ -1,5 +1,7 @@
 .mvn/
 .idea/
+.env
+src/main/resources/.env
 
 HELP.md
 target/
