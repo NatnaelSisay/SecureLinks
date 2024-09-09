@@ -5,6 +5,18 @@
     <title>SecureNote</title>
 </head>
 <body>
-    <h1>Secure Note</h1>
+
+<div th:if="${user != null}">
+    <p>user found</p>
+    <h1>Welcome: <span th:text="${user.fullName()}"></span></h1>
+    <p th:text="${user.email()}"></p>
+    <img th:src="${user.imgUrl()}"/>
+</div>
+
+<div th:if="${user == null}">
+    <h1>Landing page</h1>
+    <a href="/login">Login</a>
+    <a href="/login">Signup</a>
+</div>
 </body>
 </html>

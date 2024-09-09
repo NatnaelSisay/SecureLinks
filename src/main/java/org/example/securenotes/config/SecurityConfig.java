@@ -17,12 +17,11 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth.
-                        requestMatchers("/").permitAll()
+                        requestMatchers("/", "/index**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .csrf(AbstractHttpConfigurer::disable)
-                .oauth2Login(Customizer.withDefaults())
-                .formLogin(Customizer.withDefaults());
+                .oauth2Login(Customizer.withDefaults());
         return http.build();
     }
 }
