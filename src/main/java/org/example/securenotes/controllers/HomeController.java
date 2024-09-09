@@ -2,20 +2,24 @@ package org.example.securenotes.controllers;
 
 
 import lombok.RequiredArgsConstructor;
+import org.example.securenotes.dto.NoteRequestDTO;
+import org.example.securenotes.dto.NoteResponseDTO;
+import org.example.securenotes.model.Note;
 import org.example.securenotes.model.NoteUser;
-import org.springframework.core.convert.ConversionService;
+import org.example.securenotes.services.NoteService;
+import org.example.securenotes.utilities.UserUtils;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
-import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @Controller
 @RequiredArgsConstructor
 public class HomeController {
-    private final ConversionService conversionService;
+    private final NoteService noteService;
 
     @GetMapping
     public String home(
@@ -25,37 +29,39 @@ public class HomeController {
         // get authenticated user information and send it to the user interface
         if(authentication == null) return "index";
 
-        NoteUser noteUser = (NoteUser) getAuthenticatedUserDetail(authentication);
-        System.out.println(noteUser);
+        NoteUser noteUser = UserUtils.getAuthenticatedUserDetail(authentication);
         model.addAttribute("user", noteUser);
+
+//        fetch notes of the user and display on the page
+        List<NoteResponseDTO> notes = this.noteService.findAll();
+        model.addAttribute("notes", notes);
+//        have a link to add a new note
         return "index";
     }
 
-    private NoteUser getAuthenticatedUserDetail(Authentication authentication){
-        Object principal = authentication.getPrincipal();
-
-        String fullName = "";
-        String email = "";
-        String image = "";
-
-        //        Google
-        if(principal instanceof DefaultOidcUser) {
-            DefaultOidcUser user = (DefaultOidcUser) authentication.getPrincipal();
-            fullName = user.getFullName();
-            email = user.getEmail();
-            image = user.getPicture();
-            System.out.println(image);
-
-        } else if(principal instanceof DefaultOAuth2User) {
-            //        Github
-            DefaultOAuth2User user = (DefaultOAuth2User) authentication.getPrincipal();
-
-            fullName = user.getAttribute("name");
-            email = user.getAttribute("email");
-            image = user.getAttribute("avatar_url");
-
-        }
-
-        return new NoteUser(fullName, email, image);
+    @GetMapping("/notes")
+    public String addNotes(Model model){
+        NoteRequestDTO noteRequest = new NoteRequestDTO();
+        model.addAttribute("note", noteRequest);
+        return "addNotes";
     }
+
+    @PostMapping("/notes")
+    public String saveNotes(@ModelAttribute NoteRequestDTO noteRequest){
+        this.noteService.save(noteRequest);
+        return "redirect:/";
+    }
+
+    @PutMapping("/notes/{noteId}")
+    public String updateNotes(@PathVariable("noteId") long id, @ModelAttribute NoteRequestDTO noteRequest){
+        this.noteService.update(id, noteRequest);
+        return "redirect:/";
+    }
+
+    @DeleteMapping("/notes/{noteId}")
+    public String deleteNotes(@PathVariable("noteId") long id){
+        this.noteService.delete(id);
+        return "redirect:/";
+    }
+
 }

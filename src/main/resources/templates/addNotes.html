@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Note</title>
+</head>
+<body>
+  <h2>Adding new Note</h2>
+  <form th:object="${note}" th:action="@{/notes}" method="post">
+    <label>
+      <input th:field="*{title}" type="text" placeholder="Title ..." name="title" />
+    </label>
+
+    <label>
+      <input th:field="*{content}" type="text" placeholder="Detail ..." name="content"/>
+    </label>
+
+    <input type="submit" value="Save">
+  </form>
+</body>
+</html>

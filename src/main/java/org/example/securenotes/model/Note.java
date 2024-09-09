@@ -15,10 +15,17 @@ public class Note {
     @Id
     @GeneratedValue
     private Long id;
+    private String userEmail;
     private String title;
     private String content;
 
     public Note(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
+
+    public Note(String userEmail, String title, String content) {
+        this.userEmail = userEmail;
         this.title = title;
         this.content = content;
     }

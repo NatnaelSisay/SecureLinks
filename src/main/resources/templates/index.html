@@ -4,13 +4,35 @@
     <meta charset="UTF-8">
     <title>SecureNote</title>
 </head>
-<body>
+<body style="box-sizing: border-box">
 
 <div th:if="${user != null}">
-    <p>user found</p>
-    <h1>Welcome: <span th:text="${user.fullName()}"></span></h1>
-    <p th:text="${user.email()}"></p>
-    <img th:src="${user.imgUrl()}"/>
+    <header style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: lightgray; margin-bottom: 1rem">
+        <h1>Welcome, <span th:text="${user.fullName()}"></span></h1>
+        <img th:src="${user.imgUrl()}" style="width: 100px; border-radius: 50%"/>
+    </header>
+
+
+    <div th:if="${#lists.size(notes) != 0}">
+        <div th:each="note : ${notes}" style="margin-bottom: 0.5rem; border-bottom: 1px solid red">
+            <div style="display: flex; justify-content: space-between">
+                <p th:text="${note.title()}"></p>
+                <div>
+                    <button>Update</button>
+                    <form th:action="@{'/notes/{noteId}'(noteId=${note.id})}" th:method="delete" >
+                        <button type="submit" class="btn">Delete</button>
+                    </form>
+                </div>
+            </div>
+            <p th:text="${note.content()}"></p>
+        </div>
+    </div>
+
+    <div th:if="${#lists.size(notes) == 0}">
+        <p>Looks Like you have no new Notes yet, lets write some</p>
+    </div>
+
+    <a href="/notes">Add Note</a>
 </div>
 
 <div th:if="${user == null}">
