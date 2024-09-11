@@ -1,17 +1,19 @@
 package org.example.securenotes.controllers;
 
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.securenotes.dto.NoteRequestDTO;
 import org.example.securenotes.dto.NoteResponseDTO;
-import org.example.securenotes.model.Note;
 import org.example.securenotes.model.NoteUser;
 import org.example.securenotes.services.NoteService;
 import org.example.securenotes.utilities.UserUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -32,10 +34,10 @@ public class HomeController {
         NoteUser noteUser = UserUtils.getAuthenticatedUserDetail(authentication);
         model.addAttribute("user", noteUser);
 
-//        fetch notes of the user and display on the page
+        // fetch notes of the user and display on the page
         List<NoteResponseDTO> notes = this.noteService.findAll();
         model.addAttribute("notes", notes);
-//        have a link to add a new note
+
         return "index";
     }
 
@@ -46,14 +48,41 @@ public class HomeController {
         return "addNotes";
     }
 
+    @GetMapping("/notes/{noteId}")
+    public String viewNote(Model model){
+        NoteRequestDTO noteRequest = new NoteRequestDTO();
+        model.addAttribute("note", noteRequest);
+        return "addNotes";
+    }
+
     @PostMapping("/notes")
-    public String saveNotes(@ModelAttribute NoteRequestDTO noteRequest){
+    public String saveNotes(
+            @Valid @ModelAttribute NoteRequestDTO noteRequest,
+            BindingResult bindingResult,
+            RedirectAttributes redirectAttributes
+    ){
+        if(bindingResult.hasErrors()){
+            return "addNotes";
+        }
+
         this.noteService.save(noteRequest);
+        redirectAttributes.addFlashAttribute("message", "Note saved successfully.");
         return "redirect:/";
     }
 
-    @PutMapping("/notes/{noteId}")
-    public String updateNotes(@PathVariable("noteId") long id, @ModelAttribute NoteRequestDTO noteRequest){
+    @GetMapping("/notes/update/{noteId}")
+    public String updateNote(@PathVariable("noteId") Long noteId, Model model){
+        NoteResponseDTO updateNote = this.noteService.findById(noteId);
+        model.addAttribute("note", updateNote);
+        return "updateNote";
+    }
+
+    @PostMapping("/notes/update/{noteId}")
+    public String updateNotes(@PathVariable("noteId") long id,@Valid @ModelAttribute NoteRequestDTO noteRequest, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            return "addNotes";
+        }
+
         this.noteService.update(id, noteRequest);
         return "redirect:/";
     }

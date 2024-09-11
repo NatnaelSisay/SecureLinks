@@ -18,7 +18,10 @@
             <div style="display: flex; justify-content: space-between">
                 <p th:text="${note.title()}"></p>
                 <div>
-                    <button>Update</button>
+                    <a th:href="@{'/notes/update/{noteId}'(noteId=${note.id})}">
+                        <button>Update</button>
+                    </a>
+
                     <form th:action="@{'/notes/{noteId}'(noteId=${note.id})}" th:method="delete" >
                         <button type="submit" class="btn">Delete</button>
                     </form>

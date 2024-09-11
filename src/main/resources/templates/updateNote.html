@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Update Note</title>
+</head>
+<body>
+<h2>Updating Note</h2>
+<form th:object="${note}" th:action="@{'/notes/update/{noteId}'(noteId=${note.id})}" method="post">
+  <label>
+    <input th:field="*{title}" type="text" placeholder="Title ..." name="title" />
+  </label>
+
+  <label>
+    <input th:field="*{content}" type="text" placeholder="Detail ..." name="content"/>
+  </label>
+
+  <input type="submit" value="Update">
+</form>
+</body>
+</html>
