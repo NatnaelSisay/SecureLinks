@@ -7,11 +7,13 @@ import org.example.securenotes.dto.NoteResponseDTO;
 import org.example.securenotes.model.Note;
 import org.example.securenotes.model.NoteUser;
 import org.example.securenotes.repository.NoteRepository;
+import org.example.securenotes.services.AuthorizationService;
 import org.example.securenotes.services.NoteService;
 import org.example.securenotes.utilities.UserUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -19,7 +21,7 @@ import java.util.List;
 public class NoteServiceImpl implements NoteService {
 
     private final NoteRepository noteRepository;
-
+    private final AuthorizationService authorizationService;
 
     @Override
     public NoteResponseDTO findById(long id) {
@@ -35,7 +37,12 @@ public class NoteServiceImpl implements NoteService {
         // handle null cases
         NoteUser user = UserUtils.getAuthenticatedUserDetail(SecurityContextHolder.getContext().getAuthentication());
 
-        List<Note> noteList = noteRepository.findNotesByUserEmail(user.email());
+        List<Note> noteList = new ArrayList<>();
+        if(this.authorizationService.isAdmin(user.email())){
+            noteList = noteRepository.findAll();
+        } else {
+            noteList = noteRepository.findNotesByUserEmail(user.email());
+        }
 
         return NoteAdapter.getNoteResponseDTOList(noteList);
     }
