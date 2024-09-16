@@ -20,8 +20,13 @@ public class SecurityConfig {
                         requestMatchers("/", "/index**").permitAll()
                         .anyRequest().authenticated()
                 )
+                .logout(
+                        logout -> logout.logoutSuccessUrl("/")
+                                        .logoutUrl("/logout").permitAll()
+                )
                 .csrf(AbstractHttpConfigurer::disable)
                 .oauth2Login(Customizer.withDefaults());
+
         return http.build();
     }
 }
