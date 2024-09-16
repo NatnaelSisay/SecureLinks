@@ -39,6 +39,17 @@ public class HomeController {
         model.addAttribute("user", noteUser);
 
         // fetch notes of the user and display on the page
+        List<NoteResponseDTO> notes = this.noteService.findAll();
+        model.addAttribute("notes", notes);
+
+        return "index";
+    }
+
+    @GetMapping("/admin/notes")
+    public String adminNotes(Authentication authentication, Model model){
+
+        NoteUser noteUser = UserUtils.getAuthenticatedUserDetail(authentication);
+        model.addAttribute("user", noteUser);
 
         Authorizations authorizations = this.authorizationsRepository.findByEmail(noteUser.email()).orElse(null);
         if(authorizations != null && authorizations.getRole() != null && authorizations.getRole().getName().equals("ROLE_ADMIN")) {
@@ -47,10 +58,7 @@ public class HomeController {
             return "admin";
         }
 
-        List<NoteResponseDTO> notes = this.noteService.findAll();
-        model.addAttribute("notes", notes);
-
-        return "index";
+        return "redirect:/";
     }
 
     @GetMapping("/notes")
