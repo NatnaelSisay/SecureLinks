@@ -37,14 +37,19 @@ public class NoteServiceImpl implements NoteService {
         // handle null cases
         NoteUser user = UserUtils.getAuthenticatedUserDetail(SecurityContextHolder.getContext().getAuthentication());
 
-        List<Note> noteList = new ArrayList<>();
-        if(this.authorizationService.isAdmin(user.email())){
-            noteList = noteRepository.findAll();
-        } else {
-            noteList = noteRepository.findNotesByUserEmail(user.email());
-        }
+        List<Note> noteList = noteRepository.findNotesByUserEmail(user.email());
+//        if(this.authorizationService.isAdmin(user.email())){
+//            noteList = noteRepository.findAll();
+//        } else {
+//            noteList =
+//        }
 
         return NoteAdapter.getNoteResponseDTOList(noteList);
+    }
+
+    @Override
+    public List<Note> findAllForAdmin() {
+        return noteRepository.findAll();
     }
 
     @Override

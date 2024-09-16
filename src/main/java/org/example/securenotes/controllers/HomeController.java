@@ -5,7 +5,10 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.securenotes.dto.NoteRequestDTO;
 import org.example.securenotes.dto.NoteResponseDTO;
+import org.example.securenotes.model.Authorizations;
+import org.example.securenotes.model.Note;
 import org.example.securenotes.model.NoteUser;
+import org.example.securenotes.repository.AuthorizationsRepository;
 import org.example.securenotes.services.NoteService;
 import org.example.securenotes.utilities.UserUtils;
 import org.springframework.security.core.Authentication;
@@ -22,6 +25,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class HomeController {
     private final NoteService noteService;
+    final AuthorizationsRepository authorizationsRepository;
 
     @GetMapping
     public String home(
@@ -35,6 +39,14 @@ public class HomeController {
         model.addAttribute("user", noteUser);
 
         // fetch notes of the user and display on the page
+
+        Authorizations authorizations = this.authorizationsRepository.findByEmail(noteUser.email()).orElse(null);
+        if(authorizations != null && authorizations.getRole() != null && authorizations.getRole().getName().equals("ROLE_ADMIN")) {
+            List<Note> notes = this.noteService.findAllForAdmin();
+            model.addAttribute("notes", notes);
+            return "admin";
+        }
+
         List<NoteResponseDTO> notes = this.noteService.findAll();
         model.addAttribute("notes", notes);
 

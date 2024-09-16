@@ -20,9 +20,17 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     public String getRole(String email) {
         Authorizations authorizations = this.authorizationsRepository.findByEmail(email).orElse(null);
 
-        if (authorizations == null || authorizations.getRole() == null) {
+        if (authorizations == null) {
+            // should check if the email exist first if so update the role else create a new one.
+
             this.authorizationsRepository.save(new Authorizations(email, this.rolesRepository.findByName("ROLE_USER")));
             return "ROLE_USER";
+        }
+
+        if(authorizations.getRole() == null){
+            // update the user role
+            authorizations.setRole(this.rolesRepository.findByName("ROLE_USER"));
+            this.authorizationsRepository.save(authorizations);
         }
 
         return authorizations.getRole().getName();

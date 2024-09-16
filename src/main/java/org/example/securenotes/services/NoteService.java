@@ -2,6 +2,7 @@ package org.example.securenotes.services;
 
 import org.example.securenotes.dto.NoteRequestDTO;
 import org.example.securenotes.dto.NoteResponseDTO;
+import org.example.securenotes.model.Note;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ public interface NoteService {
 
 //    get all notes
     public List<NoteResponseDTO> findAll();
+    public List<Note> findAllForAdmin();
 
 //    save note
     public NoteResponseDTO save(NoteRequestDTO noteRequestDTO);
