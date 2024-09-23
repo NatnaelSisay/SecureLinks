@@ -11,14 +11,7 @@
 <body style="box-sizing: border-box">
 
 <div th:if="${user != null}">
-    <header style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: lightgray; margin-bottom: 1rem">
-        <h1>Welcome, <span th:text="${user.fullName()}"></span></h1>
-        <img th:src="${user.imgUrl()}" style="width: 100px; border-radius: 50%"/>
-        <div>
-            <form th:action="@{'/logout'}" th:method="post">
-                <input type="submit" value="Logout">
-            </form>
-        </div>
+    <header th:replace="~{fragments/header.html :: header}">
     </header>
 
 
