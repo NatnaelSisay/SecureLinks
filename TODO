@@ -1,0 +1,5 @@
+- Notes ordered randomly, and a new and updated not will always go to the bottom, but i need to sort them
+    by the time they were updated
+
+- on adding notes, I can't pass the header fragment, b/c the authenticated user is associated only in index.html file
+and won't be accessible to other independent fragments unless they are called in the index.html file. Needs fix
