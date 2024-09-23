@@ -1,0 +1,21 @@
+
+body {
+    background-color: #181C14;
+    color: #ECDFCC;
+}
+
+h1 {
+    color: red;
+}
+
+.full-height {
+    min-height: 100vh;
+}
+
+.full-width {
+    min-width: 100%;
+}
+
+.box {
+    width: 50%;
+}
