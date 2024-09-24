@@ -35,3 +35,7 @@ h1 {
     font-size: 150%;
     text-decoration: none;
 }
+
+.white-space {
+    white-space: pre-line;
+}
