@@ -23,7 +23,15 @@ Steps
 # Clone project
 git clone https://github.com/NatnaelSisay/SecureLinks.git
 cd SecureLinks
+```
+```shell
+# create .env file, copy the content of example.env and paste them in .env file
+# this steps is added to create friction, to make sure you are serious about trying the app
+touch .env
+cat example.env >> .env
+```
 
+```
 # Script to build jar file
 chmod +x script.sh
 source script.sh

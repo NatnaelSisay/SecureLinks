@@ -1,4 +1,3 @@
-.mvn/
 .idea/
 .env
 src/main/resources/.env
