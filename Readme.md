@@ -10,6 +10,32 @@ A place where you put those links you might need for later
 The project uses the current industry standard OAuth2.0 for Authorization currently supporting both Google and GitHub
 as Authorization providers. In short users to need to create a password to access and use the application.
 
+### Installation
+To install and run this project on your local machine follow the following steps, make sure not to skip steps.
+
+**Requirements**
+- ```Docker``` is installed and running
+- No running instance of ```Postgress``` 
+- patience
+
+Steps
+```shell
+# Clone project
+git clone https://github.com/NatnaelSisay/SecureLinks.git
+cd SecureLinks
+
+# Script to build jar file
+chmod +x script.sh
+source script.sh
+
+# Running application
+docker-compose up
+```
+
+Visit [localhost:8080](http://localhost:8080)
+
+
+
 ## Optimizations
 - Optimized sorting for Items, to show recently updated to the top
 - Deploy application on AWS(EC2 or ECS/Farget)
