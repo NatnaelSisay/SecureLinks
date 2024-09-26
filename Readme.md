@@ -5,7 +5,11 @@ A place where you put those links you might need for later
 
 ## How It's Made:
 
-**Tech used:** OAuth2.0, SpringBoot, Thymeleaf
+Tech used: 
+- **Java: 17**
+- **OAuth2.0** 
+- **SpringBoot: 3** 
+- **Thymeleaf**
 
 The project uses the current industry standard OAuth2.0 for Authorization currently supporting both Google and GitHub
 as Authorization providers. In short users to need to create a password to access and use the application.

@@ -1,5 +1,7 @@
 
 # Load environment and create package in target
+docker-compose down
+
 source .env && docker-compose up db --build -d && \
 source .env && ./mvnw clean package \
   -DGIT_CLIENT_ID=$GIT_CLIENT_ID \
@@ -10,3 +12,4 @@ source .env && ./mvnw clean package \
   -DPG_PASSWORD=$PG_PASSWORD \
   -DPG_USER=$PG_USER
 
+docker-compose down
