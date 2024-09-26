@@ -33,13 +33,15 @@ cat example.env >> .env
 
 ```
 # Script to build jar file
-chmod +x script.sh
+# chmod +x script.sh
 source script.sh
-
+```
+```
 # Running application
 docker-compose up
 ```
 
+If everything goes successfully without an error
 Visit [localhost:8080](http://localhost:8080)
 
 
