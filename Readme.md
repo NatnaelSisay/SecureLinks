@@ -35,12 +35,13 @@ touch .env
 cat example.env >> .env
 ```
 
-```
+```shell
 # Script to build jar file
 # chmod +x script.sh
 source script.sh
 ```
-```
+
+```shell
 # Running application
 docker-compose up
 ```
