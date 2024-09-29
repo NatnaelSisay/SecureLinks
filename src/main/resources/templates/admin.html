@@ -1,72 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Admin</title>
-        <link rel="stylesheet" th:href="@{/css/reset.css}">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-        <link rel="stylesheet" th:href="@{/css/main.css}">
-    </head>
-    <body style="box-sizing: border-box">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin</title>
+    <link rel="stylesheet" th:href="@{/css/reset.css}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+<body style="box-sizing: border-box">
 
-        <div th:if="${user != null}">
-            <header th:replace="~{fragments/header.html :: header}">
-                <h1>Welcome, <span th:text="${user.fullName()}"></span></h1>
-                <img th:src="${user.imgUrl()}" style="width: 100px; border-radius: 50%"/>
-            </header>
+<div th:if="${user != null}">
+    <header th:replace="~{fragments/header.html :: header}">
+        <h1>Welcome, <span th:text="${user.fullName()}"></span></h1>
+        <img th:src="${user.imgUrl()}" style="width: 100px; border-radius: 50%"/>
+    </header>
 
-            <main class="container">
-                <div th:if="${#lists.size(notes) != 0}" class="accordion" id="accordionExample" data-bs-theme="dark">
-                    <div th:each="note : ${notes}"  class="accordion-item">
-
-
-                        <h2 class="accordion-header">
-
-                            <button th:text="${note.getUserEmail()} + ' | ' + ${note.getTitle()}"
-                                    th:data-bs-target="@{'#{id}'(id=${note.getId()})}"
-                                    class="accordion-button"
-                                    type="button"
-                                    data-bs-toggle="collapse"
-                                    aria-expanded="true"
-                                    aria-controls="collapseOne">
-                            </button>
-                        </h2>
-
-                        <div th:id="${note.getId()}"
-                             class="accordion-collapse collapse"
-                             aria-labelledby="headingOne"
-                             data-bs-parent="#accordionExample">
-
-                            <div class="accordion-body" th:text="${note.getContent()}">
-                            </div>
-                            <div class="d-flex justify-content-end align-items-center mb-2">
-                                <a th:href="@{'/notes/update/{noteId}'(noteId=${note.getId()})}">
-                                    <button class="btn btn-light btn-sm me-2">Update</button>
-                                </a>
-
-                                <form
-                                        th:action="@{'/notes/{noteId}'(noteId=${note.getId()})}"
-                                        th:method="delete" >
-                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                                </form>
-                            </div>
-                        </div>
+    <main class="container">
+        <div th:if="${#lists.size(notes) != 0}" class="accordion" id="accordionExample" data-bs-theme="dark">
+            <div th:each="note : ${notes}" class="accordion-item">
 
 
+                <h2 class="accordion-header">
+
+                    <button th:text="${note.getUserEmail()} + ' | ' + ${note.getTitle()}"
+                            th:data-bs-target="@{'#{id}'(id=${note.getId()})}"
+                            class="accordion-button"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            aria-expanded="true"
+                            aria-controls="collapseOne">
+                    </button>
+                </h2>
+
+                <div th:id="${note.getId()}"
+                     class="accordion-collapse collapse"
+                     aria-labelledby="headingOne"
+                     data-bs-parent="#accordionExample">
+
+                    <div class="accordion-body" th:text="${note.getContent()}">
+                    </div>
+                    <div class="d-flex justify-content-end align-items-center mb-2">
+                        <a th:href="@{'/notes/update/{noteId}'(noteId=${note.getId()})}">
+                            <button class="btn btn-light btn-sm me-2">Update</button>
+                        </a>
+
+                        <form
+                                th:action="@{'/notes/{noteId}'(noteId=${note.getId()})}"
+                                th:method="delete">
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
                     </div>
                 </div>
 
-                <div th:if="${#lists.size(notes) == 0}">
-                    <p>Admin, we have nothing yet</p>
-                </div>
-            </main>
+
+            </div>
         </div>
 
-        <div th:if="${user == null}">
-            <h1>Landing page</h1>
-            <a href="/login">Login</a>
-            <a href="/login">Signup</a>
+        <div th:if="${#lists.size(notes) == 0}">
+            <p>Admin, we have nothing yet</p>
         </div>
-    </body>
+    </main>
+</div>
+
+<div th:if="${user == null}">
+    <h1>Landing page</h1>
+    <a href="/login">Login</a>
+    <a href="/login">Signup</a>
+</div>
+</body>
 </html>
