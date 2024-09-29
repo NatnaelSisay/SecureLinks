@@ -23,10 +23,4 @@ public class Note {
         this.title = title;
         this.content = content;
     }
-
-    public Note(String userEmail, String title, String content) {
-        this.userEmail = userEmail;
-        this.title = title;
-        this.content = content;
-    }
 }

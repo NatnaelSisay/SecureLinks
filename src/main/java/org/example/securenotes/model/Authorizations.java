@@ -17,9 +17,4 @@ public class Authorizations {
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Role role;
-
-    public Authorizations(String email, Role role) {
-        this.email = email;
-        this.role = role;
-    }
 }
