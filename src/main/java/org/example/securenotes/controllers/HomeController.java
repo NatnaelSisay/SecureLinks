@@ -39,7 +39,7 @@ public class HomeController {
         model.addAttribute("user", noteUser);
 
         // fetch notes of the user and display on the page
-        List<NoteResponseDTO> notes = this.noteService.findAll();
+        List<NoteResponseDTO> notes = this.noteService.findAll(noteUser.email());
         model.addAttribute("notes", notes);
 
         return "index";
@@ -66,15 +66,7 @@ public class HomeController {
 
     @GetMapping("/notes")
     public String addNotes(Model model){
-        NoteRequestDTO noteRequest = new NoteRequestDTO();
-        model.addAttribute("note", noteRequest);
-        return "addNotes";
-    }
-
-    @GetMapping("/notes/{noteId}")
-    public String viewNote(Model model){
-        NoteRequestDTO noteRequest = new NoteRequestDTO();
-        model.addAttribute("note", noteRequest);
+        model.addAttribute("note", new NoteRequestDTO());
         return "addNotes";
     }
 

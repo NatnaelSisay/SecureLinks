@@ -11,7 +11,7 @@ public interface NoteService {
     public NoteResponseDTO findById(long id);
 
 //    get all notes
-    public List<NoteResponseDTO> findAll();
+    public List<NoteResponseDTO> findAll(String email);
     public List<Note> findAllForAdmin();
 
 //    save note

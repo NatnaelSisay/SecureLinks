@@ -30,11 +30,8 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
-    public List<NoteResponseDTO> findAll() {
-        // handle null cases
-        NoteUser user = UserUtils.getAuthenticatedUserDetail(SecurityContextHolder.getContext().getAuthentication());
-
-        List<Note> noteList = noteRepository.findNotesByUserEmail(user.email());
+    public List<NoteResponseDTO> findAll(String email) {
+        List<Note> noteList = noteRepository.findNotesByUserEmail(email);
         return NoteAdapter.getNoteResponseDTOList(noteList);
     }
 
