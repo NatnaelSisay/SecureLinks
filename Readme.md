@@ -53,12 +53,14 @@ Visit [localhost:8080](http://localhost:8080)
 
 ## Optimizations
 - Optimized sorting for Items, to show recently updated to the top
+- Use Thymeleaf-layout to structure the page and reduce duplication
 - Deploy application on AWS(EC2 or ECS/Farget)
 
 ## Lessons Learned:
 
-Learning how OAuth2 works and the difference b/n OIDC(Open Id connect) and OAuth was eye opening experience. For future reference
-Google provides OIDC and GitHub don't provide that, knowing that will enable us to customize our support for different authorization servers.
+Learning how OAuth2 works and the difference between OIDC (OpenID Connect) and OAuth was an 
+eye-opening experience. For future reference, Google provides OIDC, while GitHub does not.
+Knowing that will enable us to customize our support for different authorization servers.
 
 ## Examples:
 
