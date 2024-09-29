@@ -46,7 +46,10 @@ public class HomeController {
     }
 
     @GetMapping("/admin/notes")
-    public String adminNotes(Authentication authentication, Model model){
+    public String adminNotes(
+            Authentication authentication,
+            Model model
+    ){
 
         NoteUser noteUser = UserUtils.getAuthenticatedUserDetail(authentication);
         model.addAttribute("user", noteUser);
@@ -91,14 +94,22 @@ public class HomeController {
     }
 
     @GetMapping("/notes/update/{noteId}")
-    public String updateNote(@PathVariable("noteId") Long noteId, Model model){
+    public String updateNote(
+            @PathVariable("noteId")
+            Long noteId,
+            Model model
+    ){
         NoteResponseDTO updateNote = this.noteService.findById(noteId);
         model.addAttribute("note", updateNote);
         return "updateNote";
     }
 
     @PostMapping("/notes/update/{noteId}")
-    public String updateNotes(@PathVariable("noteId") long id,@Valid @ModelAttribute NoteRequestDTO noteRequest, BindingResult bindingResult){
+    public String updateNotes(
+            @PathVariable("noteId") long id,
+            @Valid @ModelAttribute NoteRequestDTO noteRequest,
+            BindingResult bindingResult
+    ){
         if(bindingResult.hasErrors()){
             return "addNotes";
         }
@@ -108,7 +119,9 @@ public class HomeController {
     }
 
     @DeleteMapping("/notes/{noteId}")
-    public String deleteNotes(@PathVariable("noteId") long id){
+    public String deleteNotes(
+            @PathVariable("noteId") long id
+    ){
         this.noteService.delete(id);
         return "redirect:/";
     }
